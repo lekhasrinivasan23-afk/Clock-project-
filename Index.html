@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock & Countdown Timer</title>
 
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family:Arial, sans-serif;
+            background:linear-gradient(135deg,#6a11cb,#2575fc,#00c9ff);
+        }
+
+        .container{
+            background:rgba(255,255,255,0.15);
+            backdrop-filter:blur(10px);
+            padding:40px;
+            border-radius:20px;
+            text-align:center;
+            color:white;
+            box-shadow:0 8px 32px rgba(0,0,0,0.2);
+            width:90%;
+            max-width:600px;
+        }
+
+        h1{
+            margin-bottom:15px;
+        }
+
+        #clock{
+            font-size:55px;
+            font-weight:bold;
+            margin-bottom:30px;
+            text-shadow:0 0 15px white;
+        }
+
+        #countdown{
+            font-size:32px;
+            font-weight:bold;
+            color:#ffeb3b;
+            text-shadow:0 0 10px #ffeb3b;
+        }
+
+        p{
+            margin-top:20px;
+            font-size:14px;
+            opacity:0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Digital Clock</h1>
+        <div id="clock">00:00:00</div>
+
+        <h1>Countdown Timer</h1>
+        <div id="countdown"></div>
+
+        <p>Built using HTML, CSS and JavaScript</p>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById("clock").innerHTML =
+                `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        const targetDate = new Date("January 1, 2027 00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML =
+                `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+
+            if (difference < 0) {
+                document.getElementById("countdown").innerHTML =
+                    "Countdown Completed";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+
+</body>
+</html>
